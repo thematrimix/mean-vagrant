@@ -7,7 +7,14 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.box = "hashicorp/precise64"
 
+	# Port for NodeJS
 	config.vm.network "forwarded_port", guest: 3000, host: 3000
+	# The default port for mongod and mongos instances. You can change this port with port or --port.
+	config.vm.network "forwarded_port", guest: 27017, host: 27017
+	# The default port when running with --shardsvr runtime operation or the shardsvr value for the clusterRole setting in a configuration file.
+	#config.vm.network "forwarded_port", guest: 27018, host: 27018
+	# The default port when running with --configsvr runtime operation or the configsvr value for the clusterRole setting in a configuration file.
+	#config.vm.network "forwarded_port", guest: 27019, host: 27019
 
 	config.vm.provision :shell, :path => "provision/01_bootstrap.sh"
 	config.vm.provision :shell, :path => "provision/02_pre-install-nvm.sh"
